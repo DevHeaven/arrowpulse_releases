@@ -2,7 +2,7 @@
 
 ArrowPulse is a read-only, AI-powered deliverability intelligence platform for [GreenArrow MTA](https://www.greenarrowemail.com/). It connects to GreenArrow's PostgreSQL database (never writes to it), analyzes deferrals, bounces, ISP behavior, and SMTP reply patterns, and turns them into actionable intelligence.
 
-As of **v2.0.0**, the supported installation method is **Docker Compose** — fully configured via a single `.env` file, no setup wizard, no manual SQL. From a blank server to a running system in about 5 minutes.
+As of **v2.0.1**, the supported installation method is **Docker Compose** — fully configured via a single `.env` file, no setup wizard, no manual SQL. From a blank server to a running system in about 5 minutes.
 
 ---
 
@@ -30,9 +30,9 @@ sudo usermod -aG docker $USER && newgrp docker
 ### 2. Download and extract ArrowPulse
 
 ```bash
-curl -sL https://github.com/DevHeaven/arrowpulse_releases/releases/download/v2.0.0/arrowpulse-2.0.0.zip -o arrowpulse.zip
+curl -sL https://github.com/DevHeaven/arrowpulse_releases/releases/download/v2.0.1/arrowpulse-2.0.1.zip -o arrowpulse.zip
 unzip -q arrowpulse.zip
-sudo mv arrowpulse-2.0.0 /opt/arrowpulse
+sudo mv arrowpulse-2.0.1 /opt/arrowpulse
 cd /opt/arrowpulse
 ```
 
@@ -190,4 +190,4 @@ The full deployment guide (`README.DOCKER.md`) is included in the release, cover
 
 ---
 
-*Last Updated: July 2026 — ArrowPulse v2.0.0*
+*Last Updated: July 2026 — ArrowPulse v2.0.1*
