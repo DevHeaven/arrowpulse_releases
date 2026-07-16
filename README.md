@@ -81,6 +81,10 @@ Open `http://your-server-ip:8080` and log in with your `ADMIN_EMAIL` / `ADMIN_PA
 > `docker compose exec app cat storage/app/private/app_key` — paste it into `.env` as `APP_KEY=...`.
 > This key encrypts stored credentials; keep it with your backups.
 
+### 7. Connect GreenArrow event notifications (required for bounce/deferral/engagement data)
+
+ArrowPulse reads throttles, queues, and campaign stats directly from GreenArrow's database — those dashboards work immediately. But per-message **bounce, deferral, and engagement data is pushed by GreenArrow**, so one more GreenArrow-side step is needed (see the full section below).
+
 ---
 
 ## 🏗️ What You Get
@@ -109,6 +113,33 @@ Settings controlled by environment variables are **locked in the admin UI** with
 - `healthy` (HTTP 200) — everything connected
 - `degraded` (HTTP 200) — GreenArrow DB unreachable; ArrowPulse runs and the dashboard shows a clear connection error
 - `unhealthy` (HTTP 503) — ArrowPulse's own database is down
+
+---
+
+## 📨 Connecting GreenArrow Event Notifications
+
+ArrowPulse gets its data through **two channels**:
+
+1. **Direct database reads** (throttles, queues, sends, DKIM, VMTAs) — works as soon as `GREENARROW_DB_*` is configured.
+2. **Event notifications pushed by GreenArrow** — powers the Bounce Analysis, Deferral Analysis, IP Performance, and Engagement dashboards. **These stay empty until you configure GreenArrow to send events.**
+
+Configure GreenArrow's Event Notification system (see GreenArrow's *Event Notifications* documentation) to POST JSON event batches to:
+
+| GreenArrow event type | ArrowPulse endpoint |
+|---|---|
+| `delivery_attempt` | `http://<arrowpulse-host>:8080/api/delivery-events` |
+| `engine_open` | `http://<arrowpulse-host>:8080/api/events/opens` |
+| `engine_click` | `http://<arrowpulse-host>:8080/api/events/clicks` |
+
+Verify from the GreenArrow server:
+
+```bash
+curl http://<arrowpulse-host>:8080/api/delivery-events/health
+```
+
+Then send some mail and watch the Bounce/Deferral Analysis pages populate.
+
+> **Security:** these ingest endpoints are unauthenticated by design — restrict port 8080 at the firewall so only your GreenArrow server(s) and admin IPs can reach it.
 
 ---
 
