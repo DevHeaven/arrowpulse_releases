@@ -30,9 +30,9 @@ sudo usermod -aG docker $USER && newgrp docker
 ### 2. Download and extract ArrowPulse
 
 ```bash
-curl -sL https://github.com/DevHeaven/arrowpulse_releases/releases/download/v2.0.1/arrowpulse-2.0.1.zip -o arrowpulse.zip
+curl -sL https://github.com/DevHeaven/arrowpulse_releases/releases/download/v2.1.1/arrowpulse-2.1.1.zip -o arrowpulse.zip
 unzip -q arrowpulse.zip
-sudo mv arrowpulse-2.0.1 /opt/arrowpulse
+sudo mv arrowpulse-2.1.1 /opt/arrowpulse
 cd /opt/arrowpulse
 ```
 
@@ -221,4 +221,4 @@ The full deployment guide (`README.DOCKER.md`) is included in the release, cover
 
 ---
 
-*Last Updated: July 2026 — ArrowPulse v2.0.1*
+*Last Updated: November 2026 — ArrowPulse v2.1.1*
